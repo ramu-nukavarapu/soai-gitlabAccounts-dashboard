@@ -198,6 +198,7 @@ if st.session_state.get("authentication_status"):
         indices = ['Full Name','Affiliation (College/Company/Organization Name)']
         if st.session_state.selected_group == 'aidev':
             aidev_missing = filter_no_gitlab_accounts(st.session_state.aidev_updated)
+            st.metric("AI Developers who create accounts in gitlab",len(st.session_state.aidev_updated)-len(aidev_missing))
             st.metric("AI Developers need to create accounts in gitlab",len(aidev_missing))
             
             data = pd.DataFrame(aidev_missing)
@@ -213,6 +214,7 @@ if st.session_state.get("authentication_status"):
                     st.dataframe(filtered_data, use_container_width=True)   
         else:
             techlead_missing = filter_no_gitlab_accounts(st.session_state.techlead_updated)
+            st.metric("Tech Leads need to create accounts in gitlab",len(st.session_state.techlead_updated)-len(techlead_missing))
             st.metric("Tech Leads need to create accounts in gitlab",len(techlead_missing))
             data = pd.DataFrame(techlead_missing)
             data = data[indices]
